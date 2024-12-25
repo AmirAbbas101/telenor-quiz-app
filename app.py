@@ -17,6 +17,7 @@ time.tzset()
 app.logger.info(f"Timezone set to: {time.tzname}")
 
 data = {}
+day = 1
 
 
 # Function to scrape quiz data from the given URL
@@ -53,6 +54,9 @@ def scrape_quiz_data():
     quiz_date = f"{current_date.month}/{current_date.day}/{current_date.year}"
     # del questions[0]
     global data
+    global day
+    day = current_date.day
+    print(day)
     data = {"quiz_date": quiz_date, "questions": questions}
     app.logger.info("Quiz data successfully scraped and updated.")
 
@@ -61,7 +65,9 @@ def scrape_quiz_data():
 @app.route("/", methods=["GET"])
 def get_quiz_data():
     # Call scrape_quiz_data manually when the route is accessed
-    scrape_quiz_data()
+    current_date = datetime.datetime.utcnow()
+    if day != current_date.day:
+        scrape_quiz_data()
     if not data:
         return render_template(
             "index.html", quiz_data={"message": "Quiz data is not available yet."}
