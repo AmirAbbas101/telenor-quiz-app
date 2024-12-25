@@ -3,7 +3,6 @@ import requests
 from bs4 import BeautifulSoup
 from werkzeug.exceptions import HTTPException
 import datetime
-from apscheduler.schedulers.blocking import BlockingScheduler
 import os
 import time
 
@@ -58,16 +57,11 @@ def scrape_quiz_data():
     app.logger.info("Quiz data successfully scraped and updated.")
 
 
-def schedule_job():
-    scheduler = BlockingScheduler()
-    scheduler.add_job(scrape_quiz_data, "cron", hour=2, minute=0)
-    scheduler.start()
-
-
 # Route to render quiz data on the home page
 @app.route("/", methods=["GET"])
 def get_quiz_data():
-    schedule_job()
+    # Call scrape_quiz_data manually when the route is accessed
+    scrape_quiz_data()
     if not data:
         return render_template(
             "index.html", quiz_data={"message": "Quiz data is not available yet."}
