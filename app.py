@@ -72,6 +72,7 @@ def get_quiz_data():
 # API route to retrieve quiz data in JSON format
 @app.route("/api/quiz/", methods=["GET"])
 def quiz_api():
+    scrape_quiz_data()
     if not data:
         return jsonify({"message": "Quiz data is not available yet."}), 200
     return jsonify(data), 200
