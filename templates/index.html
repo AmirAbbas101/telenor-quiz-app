@@ -74,6 +74,36 @@
         .text-center {
             margin-bottom: 30px;
         }
+
+        .card_image {
+            width: 100%;
+            /* Ensure it scales responsively with its container */
+            max-width: 400px;
+            /* Optional: Set a maximum width for larger screens */
+            margin: 0 auto;
+            /* Center the card in its container */
+            overflow: hidden;
+            /* Prevent any overflowing content */
+            border-radius: 12px;
+            /* Add rounded corners for a modern look */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            /* Soft shadow for depth */
+            background-color: #f9f9f9;
+            /* Subtle background for contrast */
+            position: relative;
+            /* For inner content positioning */
+        }
+
+        .card_image img {
+            width: 100%;
+            /* Scale the image to the width of the container */
+            height: auto;
+            /* Maintain the image's aspect ratio */
+            object-fit: cover;
+            /* Ensure the image covers the div without distortion */
+            border-radius: 12px;
+            /* Match the border-radius of the parent div */
+        }
     </style>
 </head>
 
@@ -89,13 +119,6 @@
         <!-- Questions and Answers -->
         <div class="row">
             {% for question in quiz_data.questions %}
-            
-            {% if loop.index > 1 %}
-                
-            {% else %}
-                
-            {% endif %}
-                
             <div class="col-md-6 mb-4">
                 <div class="card">
                     <div class="card-body">
@@ -109,6 +132,12 @@
                 </div>
             </div>
             {% endfor %}
+
+
+            <div class="card_image"><img src="{{ url_for('static', filename='images/ads.png') }}">
+            </div>
+
+
         </div>
     </div>
 

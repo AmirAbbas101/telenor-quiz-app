@@ -51,8 +51,7 @@ def scrape_quiz_data():
 
     current_date = datetime.datetime.utcnow()
     quiz_date = f"{current_date.month}/{current_date.day}/{current_date.year}"
-    del questions[0]
-    print(questions)
+    # del questions[0]
     global data
     data = {"quiz_date": quiz_date, "questions": questions}
     app.logger.info("Quiz data successfully scraped and updated.")
