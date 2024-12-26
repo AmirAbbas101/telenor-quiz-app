@@ -56,7 +56,6 @@ def scrape_quiz_data():
     global data
     global day
     day = current_date.day
-    print(day)
     data = {"quiz_date": quiz_date, "questions": questions}
     app.logger.info("Quiz data successfully scraped and updated.")
 
@@ -66,6 +65,7 @@ def scrape_quiz_data():
 def get_quiz_data():
     # Call scrape_quiz_data manually when the route is accessed
     current_date = datetime.datetime.utcnow()
+    print(current_date)
     if day != current_date.day:
         scrape_quiz_data()
     if not data:
@@ -78,7 +78,9 @@ def get_quiz_data():
 # API route to retrieve quiz data in JSON format
 @app.route("/api/quiz/", methods=["GET"])
 def quiz_api():
-    scrape_quiz_data()
+    current_date = datetime.datetime.utcnow()
+    if day != current_date.day:
+        scrape_quiz_data()
     if not data:
         return jsonify({"message": "Quiz data is not available yet."}), 200
     return jsonify(data), 200
